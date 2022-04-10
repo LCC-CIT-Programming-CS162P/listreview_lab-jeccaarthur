@@ -32,6 +32,48 @@ def main():
 
     """
 
+    # create a list of lists for the scorecard
+    uScoreCard = [0] * 16
+    cScorecard = [0] * 16
+    gameScorecard = [uScoreCard, cScorecard]
+
+    # set userTurn to false
+    userTurn = False
+
+    # reset the scorecard
+    scorecard.resetScorecard(gameScorecard)
+
+    while uScoreCard.count(constants.EMPTY) > 0 or cScorecard.count(constants.EMPTY) > 0:
+        # swap players
+        userTurn = not userTurn
+
+        # update and display the scorecard
+        scorecard.updateScorecard(gameScorecard)
+        scorecard.displayScorecards(gameScorecard)
+
+        if userTurn:
+            print("User's turn")
+            sleep(2)
+            playing.userPlay(uScoreCard)
+        else:
+            print("Computer's turn")
+            sleep(2)
+            playing.computerPlay(cScorecard)
+
+    # update and display the scorecard
+    scorecard.updateScorecard(gameScorecard)
+    scorecard.displayScorecards(gameScorecard)
+
+    # determine and display winner
+    if gameScorecard[constants.USER][constants.TOTAL] > gameScorecard[constants.COMPUTER][constants.TOTAL]:
+        print("User wins!")
+    elif gameScorecard[constants.USER][constants.TOTAL] < gameScorecard[constants.COMPUTER][constants.TOTAL]:
+        print("Computer wins!")
+    else:
+        print("It's a tie!")
+
+
+
 
 # this block is the same all of the time
 # when the name of the file is main, call main
