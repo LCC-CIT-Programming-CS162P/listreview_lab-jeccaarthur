@@ -10,7 +10,6 @@ import constants
 from validation import getIntInRange
 import scoring
 
-# TODO: write userPlay.  I've written the rest for you.
 def userPlay(uScorecard):
     """
         create an empty list for the dice you're keeping
@@ -19,6 +18,7 @@ def userPlay(uScorecard):
         set rollCount to 0
         while rollCount < 3 and there are less than 5 dice in keeping
             call roll (the number of dice is 5 - the number of dice that you're keeping)
+            increase rollCount by 1
             print a message and the dice
             if rollCount < 3
                 call getKeeping
@@ -29,6 +29,42 @@ def userPlay(uScorecard):
         itemIndex = call getScorecardItme
         set the element in the user's scorecard based on the score of the dice in keeping
     """
+    # create empty lists for the dice you're keeping and for the dice you're rolling
+    keeping = []
+    rolling = []
+
+    # set itemIndex to -1 and rollCount to 0
+    itemIndex = -1
+    rollCount = 0
+
+    numDice = 5                                             ###
+
+    while rollCount < 3 and len(keeping) < 5:
+        # call roll function and increase roll count
+        roll(numDice, rolling)
+        rollCount += 1
+
+        # display the user's roll
+        print("The dice you rolled: ")
+        displayDice(rolling)
+        sleep(5)
+
+        if rollCount < 3:
+            getKeeping(rolling, keeping)
+            numDice -= len(keeping)                         ###
+        else:
+            moveRollToKeep(rolling, keeping)
+
+        # display the user's dice
+        print("The dice you're keeping: ")
+        displayDice(keeping)
+        sleep(5)
+
+    # set itemIndex to the value returned by getScorecardItem with user's scorecard
+    itemIndex = getScorecardItem(uScorecard)
+
+    # set the element in the user's scorecard based on the score of the dice in keeping
+    uScorecard[itemIndex] = scoring.score(itemIndex, keeping)
 
 
 def computerPlay(cScorecard):
