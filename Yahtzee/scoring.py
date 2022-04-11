@@ -3,26 +3,53 @@
 """
 import constants
 
-# TODO: write all of these that I haven't written for you
 def getCounts(dice):
-    """ this helper function takes a list of 5 dice as it's parameter and returns an list
+    """ this helper function takes a list of 5 dice as its parameter and returns an list
         The list contains the number of 1, 2, 3, 4, 5 and 6 represented in the dice
     """
-    return []
 
+    # create list to store number of counts
+    counts = []
+
+    # check each die rolled and count values
+    value = 1
+    for die in dice:
+        count = 0
+
+        # add count to list
+        counts.append(count)
+
+        # increase value
+        value += 1
+    
+    return counts
 
 def getTotal(counts):
-    """ this helper function takes the list of counts as it's parameter and returns the sum of the values of the dice
+    """ this helper function takes the list of counts as its parameter and returns the sum of the values of the dice
     """
-    return 0
+    total = 0
+    value = 1
+
+    # calculate sum of counts with corresponding values
+    for c in counts:
+        total += c * value
+        value += 1
+
+    return total
 
 
 def hasCount(howMany, counts):
-    """ this helper function takes and integer and the list of counts as it's parameters.
+    """ this helper function takes and integer and the list of counts as its parameters.
     It returns true if any of the values in count match the integer parameter.
     This function is used in scoreThreeOfAKind (for example) to determine if there are 3 of any number.
     """
-    return False
+    hasNumCounts = False
+
+    for c in counts:
+        if howMany == c:
+            hasNumCounts = True
+
+    return hasNumCounts
 
 
 def scoreOnes(counts):
@@ -32,40 +59,45 @@ def scoreOnes(counts):
 
 
 def scoreTwos(counts):
-    return 0
+    return counts[constants.TWOS] * 2
 
 
 def scoreThrees(counts):
-    return 0
+    return counts[constants.THREES] * 3
 
 
 def scoreFours(counts):
-    return 0
+    return counts[constants.FOURS] * 4
 
 
 def scoreFives(counts):
-    return 0
+    return counts[constants.FIVES] * 5
 
 
 def scoreSixes(counts):
-    return 0
-
+    return counts[constants.SIXES] * 6
 
 def scoreThreeOfAKind(counts):
     """ this function should be used as a model for scoring 4 of a kind, yahtzee and full house
     """
-    if hasCount(3, counts) or hasCount(4, counts) or hasCount(5, counts):
+    if hasCount(3, counts):
         return getTotal(counts)
     else:
         return 0
 
 
 def scoreFourOfAKind(counts):
-    return 0
+    if hasCount(4, counts):
+        return getTotal(counts)
+    else:
+        return 0
 
 
 def scoreFullHouse(counts):
-    return 0
+    if hasCount(3, counts) and hasCount(2, counts):
+        return getTotal(counts)
+    else:
+        return 0
 
 
 def scoreSmallStraight(counts):
